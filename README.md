@@ -1,10 +1,5 @@
 # Lab 04: Layout dan Responsivitas
 
-Jawaban pertanyaan *Check yourself*. Pertanyaan serupa akan muncul di review [AFL 1](https://elearn.uc.ac.id/mod/assign/view.php?id=1228758).
-
-Aturan yang dipakai: **constraints go down, sizes go up, parent sets position.**
-Artinya: parent memberi batas ukuran ke child, child memilih ukurannya di dalam batas itu, dan parent yang menentukan posisinya.
-
 ## 1. Sebuah `Text` di dalam `Row` overflow. Bagian aturan mana yang dilanggar, dan oleh widget apa?
 
 `Row` tidak membatasi lebar `Text`, jadi `Text` memakai lebar sesuai panjang tulisannya sendiri. Akibatnya ukuran yang "naik" ke parent lebih besar dari ruang yang ada, dan tidak ada yang menyuruhnya mengalah. Perbaikannya adalah membungkus `Text` dengan `Expanded` supaya `Row` yang menentukan lebarnya.
