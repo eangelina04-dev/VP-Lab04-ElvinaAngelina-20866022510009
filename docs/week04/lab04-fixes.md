@@ -19,6 +19,7 @@ Ringkasan: 9 fix di 5 tes, 5 tes lolos tanpa perubahan kode (lihat tabel kedua).
 | 8 | 4 (landscape) | `MenuScreen` body | overflowed by 184 px (small) dan 74 px (large) on the bottom; tablet tidak error tapi daftar nyaris tidak terlihat | `Column` menumpuk ±376 dp bagian tak-gulir di atas daftar, tidak ada yang bisa mengalah saat tinggi layar kurang | satu `CustomScrollView`: header sampai promo jadi `SliverToBoxAdapter`, daftar jadi `SliverList.builder` / `SliverGrid.builder` (lazy) |
 | 9 | 6 (zero items) | `MenuScreen` | `RangeError: no indices are valid: 0` saat items kosong | kode mengakses `promos[0]` dan `promos[1]` tanpa memastikan daftarnya cukup panjang | `PromoStrip` hanya dibangun jika `promos.length >= 2` |
 | 10 | 6 (zero items) | `MenuScreen` / `EmptyState` | data kosong menampilkan layar blank tanpa penjelasan | layar mengasumsikan data selalu ada, tidak ada keadaan untuk daftar kosong | `EmptyState` (ikon, pesan, tombol, `Key('empty-state')`) lewat `SliverFillRemaining`, plus `TextEditingController` agar reset sinkron |
+| 11 | Bonus (notch + gesture bar) | `CartBar` | bagian bawah tombol "Pesan" di 556 dp, melewati batas 548 dp (masuk zona gesture bar) | bar menentukan posisinya sendiri tanpa menghormati area yang ditutupi sistem (padding dari `MediaQuery`) | `SafeArea(top: false)` dan `minHeight: 72` menggantikan `height: 72` |
 
 ## 2. Tes yang lolos tanpa perubahan kode
 

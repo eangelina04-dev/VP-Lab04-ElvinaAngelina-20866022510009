@@ -674,28 +674,38 @@ class CartBar extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return Container(
-      height: 72,
-      padding: const EdgeInsets.symmetric(horizontal: Gap.md),
       color: cs.surfaceContainerHigh,
-      child: Row(
-        children: [
-          Icon(Icons.shopping_bag_outlined, color: cs.onSurfaceVariant),
-          const SizedBox(width: Gap.sm),
-          Expanded(
-            child: Text(
-              'Pesanan: $count item · Total ${rupiah(total)}',
-              style: text.titleSmall,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+      child: SafeArea(
+        top: false,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 72),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Gap.md,
+              vertical: Gap.sm,
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.shopping_bag_outlined, color: cs.onSurfaceVariant),
+                const SizedBox(width: Gap.sm),
+                Expanded(
+                  child: Text(
+                    'Pesanan: $count item · Total ${rupiah(total)}',
+                    style: text.titleSmall,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(width: Gap.md),
+                FilledButton(
+                  key: const Key('order-button'),
+                  onPressed: count == 0 ? null : onOrder,
+                  child: const Text('Pesan'),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: Gap.md),
-          FilledButton(
-            key: const Key('order-button'),
-            onPressed: count == 0 ? null : onOrder,
-            child: const Text('Pesan'),
-          ),
-        ],
+        ),
       ),
     );
   }
