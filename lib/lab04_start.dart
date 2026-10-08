@@ -286,9 +286,10 @@ class _MenuScreenState extends State<MenuScreen> {
                   onSelected: (category) => setState(() => _category = category),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: PromoStrip(first: promos[0], second: promos[1]),
-              ),
+              if (promos.length >=2)
+                SliverToBoxAdapter(
+                  child: PromoStrip(first: promos[0], second: promos[1]),
+                ),
               if (isWide)
                 SliverPadding(
                   padding: const EdgeInsets.all(Gap.md),
