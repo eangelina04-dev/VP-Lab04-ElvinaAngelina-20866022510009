@@ -221,6 +221,13 @@ class _MenuScreenState extends State<MenuScreen> {
   String _query = '';
   String _category = kCategories.first;
   final Map<String, int> _qty = {};
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   List<MenuItem> get _visible => widget.items.where((item) {
     final matchesQuery =
@@ -254,6 +261,14 @@ class _MenuScreenState extends State<MenuScreen> {
     setState(() => _qty.clear());
   }
 
+  void _resetFilters() {
+    _searchController.clear();
+    setState(() {
+      _query = '';
+      _category = kCategories.first;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final visible = _visible;
@@ -273,6 +288,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: Gap.md),
                   child: SearchBar(
                     key: const Key('search-field'),
+                    controller: _searchController,
                     hintText: 'Cari menu…',
                     leading: const Icon(Icons.search),
                     onChanged: (value) => setState(() => _query = value),
@@ -286,11 +302,23 @@ class _MenuScreenState extends State<MenuScreen> {
                   onSelected: (category) => setState(() => _category = category),
                 ),
               ),
-              if (promos.length >=2)
+              if (promos.length >= 2)
                 SliverToBoxAdapter(
                   child: PromoStrip(first: promos[0], second: promos[1]),
                 ),
-              if (isWide)
+              if (visible.isEmpty)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: EmptyState(
+                    key: const Key('empty-state'),
+                    message: widget.items.isEmpty
+                        ? 'Belum ada menu yang tersedia.'
+                        : 'Coba kata kunci atau kategori yang lain.',
+                    actionLabel: 'Reset filter',
+                    onAction: _resetFilters,
+                  ),
+                )
+              else if (isWide)
                 SliverPadding(
                   padding: const EdgeInsets.all(Gap.md),
                   sliver: SliverGrid.builder(
@@ -668,6 +696,53 @@ class CartBar extends StatelessWidget {
             child: const Text('Pesan'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class EmptyState extends StatelessWidget {
+  const EmptyState({
+    super.key,
+    required this.message,
+    required this.actionLabel,
+    required this.onAction,
+  });
+
+  final String message;
+  final String actionLabel;
+  final VoidCallback onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(Gap.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.search_off, size: 48, color: cs.outline),
+            const SizedBox(height: Gap.md),
+            Text(
+              'Menu tidak ditemukan',
+              style: text.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: Gap.xs),
+            Text(
+              message,
+              style: text.bodyMedium,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: Gap.md),
+            FilledButton.tonal(onPressed: onAction, child: Text(actionLabel)),
+          ],
+        ),
       ),
     );
   }
