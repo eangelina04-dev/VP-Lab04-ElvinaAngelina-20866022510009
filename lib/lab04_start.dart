@@ -98,14 +98,47 @@ const List<String> kCategories = [
 ];
 
 const List<MenuItem> kMenu = [
-  MenuItem(id: 'm1', name: 'Nasi Goreng Spesial', category: 'Makanan', price: 18000, promo: true),
+  MenuItem(
+    id: 'm1',
+    name: 'Nasi Goreng Spesial',
+    category: 'Makanan',
+    price: 18000,
+    promo: true,
+  ),
   MenuItem(id: 'm2', name: 'Mie Ayam Bakso', category: 'Makanan', price: 15000),
-  MenuItem(id: 'm3', name: 'Sate Ayam (10 tusuk)', category: 'Makanan', price: 25000),
-  MenuItem(id: 'm4', name: 'Ayam Geprek Sambal Matah', category: 'Makanan', price: 20000, promo: true),
-  MenuItem(id: 'm5', name: 'Pisang Goreng Keju', category: 'Camilan', price: 12000),
+  MenuItem(
+    id: 'm3',
+    name: 'Sate Ayam (10 tusuk)',
+    category: 'Makanan',
+    price: 25000,
+  ),
+  MenuItem(
+    id: 'm4',
+    name: 'Ayam Geprek Sambal Matah',
+    category: 'Makanan',
+    price: 20000,
+    promo: true,
+  ),
+  MenuItem(
+    id: 'm5',
+    name: 'Pisang Goreng Keju',
+    category: 'Camilan',
+    price: 12000,
+  ),
   MenuItem(id: 'm6', name: 'Es Teh Manis', category: 'Minuman', price: 5000),
-  MenuItem(id: 'm7', name: 'Kopi Susu Gula Aren', category: 'Minuman', price: 12000),
-  MenuItem(id: 'm8', name: 'Paket Hemat Ayam + Es Teh', category: 'Paket Hemat', price: 23000, promo: true),
+  MenuItem(
+    id: 'm7',
+    name: 'Kopi Susu Gula Aren',
+    category: 'Minuman',
+    price: 12000,
+  ),
+  MenuItem(
+    id: 'm8',
+    name: 'Paket Hemat Ayam + Es Teh',
+    category: 'Paket Hemat',
+    price: 23000,
+    promo: true,
+  ),
 ];
 
 /// Exactly 200 characters. Test 5.
@@ -115,7 +148,13 @@ const String kLongName =
     'dan Taburan Bawang Goreng Renyah Khas Kota Makassar Sulsel';
 
 const List<MenuItem> kLongNameMenu = [
-  MenuItem(id: 'long', name: kLongName, category: 'Makanan', price: 45000, promo: true),
+  MenuItem(
+    id: 'long',
+    name: kLongName,
+    category: 'Makanan',
+    price: 45000,
+    promo: true,
+  ),
   ...kMenu,
 ];
 
@@ -124,7 +163,7 @@ const List<String> _kinds = ['Makanan', 'Minuman', 'Camilan', 'Paket Hemat'];
 /// Test 7. In Module 3 this list comes from your PHP API and could be any size.
 final List<MenuItem> kBigMenu = List<MenuItem>.generate(
   500,
-      (i) => MenuItem(
+  (i) => MenuItem(
     id: 'g$i',
     name: 'Menu ${i + 1}',
     category: _kinds[i % _kinds.length],
@@ -154,7 +193,10 @@ abstract final class AppTheme {
   static ThemeData _build(Brightness brightness) {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: _seed, brightness: brightness),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _seed,
+        brightness: brightness,
+      ),
     );
   }
 }
@@ -197,8 +239,9 @@ class Lab04App extends StatelessWidget {
       darkTheme: AppTheme.dark(),
       themeMode: themeMode,
       // Lets you drag horizontal lists with a mouse in Chrome or on desktop.
-      scrollBehavior: const MaterialScrollBehavior()
-          .copyWith(dragDevices: PointerDeviceKind.values.toSet()),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: PointerDeviceKind.values.toSet(),
+      ),
       home: MenuScreen(items: items),
     );
   }
@@ -231,7 +274,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
   List<MenuItem> get _visible => widget.items.where((item) {
     final matchesQuery =
-        _query.isEmpty || item.name.toLowerCase().contains(_query.toLowerCase());
+        _query.isEmpty ||
+        item.name.toLowerCase().contains(_query.toLowerCase());
     final matchesCategory = switch (_category) {
       'Semua' => true,
       'Promo' => item.promo,
@@ -255,9 +299,8 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void _order() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Pesanan dikirim: $_count item')),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Pesanan dikirim: $_count item')));
     setState(() => _qty.clear());
   }
 
@@ -299,7 +342,8 @@ class _MenuScreenState extends State<MenuScreen> {
               SliverToBoxAdapter(
                 child: CategoryBar(
                   selected: _category,
-                  onSelected: (category) => setState(() => _category = category),
+                  onSelected: (category) =>
+                      setState(() => _category = category),
                 ),
               ),
               if (promos.length >= 2)
@@ -322,12 +366,13 @@ class _MenuScreenState extends State<MenuScreen> {
                 SliverPadding(
                   padding: const EdgeInsets.all(Gap.md),
                   sliver: SliverGrid.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 0.75,
-                      mainAxisSpacing: Gap.md,
-                      crossAxisSpacing: Gap.md,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio: 0.75,
+                          mainAxisSpacing: Gap.md,
+                          crossAxisSpacing: Gap.md,
+                        ),
                     itemCount: visible.length,
                     itemBuilder: (context, index) {
                       final item = visible[index];
@@ -355,7 +400,11 @@ class _MenuScreenState extends State<MenuScreen> {
           );
         },
       ),
-      bottomNavigationBar: CartBar(count: _count, total: _total, onOrder: _order),
+      bottomNavigationBar: CartBar(
+        count: _count,
+        total: _total,
+        onOrder: _order,
+      ),
     );
   }
 }
@@ -424,7 +473,11 @@ class StoreHeader extends StatelessWidget {
 }
 
 class CategoryBar extends StatelessWidget {
-  const CategoryBar({super.key, required this.selected, required this.onSelected});
+  const CategoryBar({
+    super.key,
+    required this.selected,
+    required this.onSelected,
+  });
 
   final String selected;
   final ValueChanged<String> onSelected;
@@ -503,7 +556,9 @@ class PromoCard extends StatelessWidget {
               const SizedBox(height: Gap.xs),
               Text(
                 item.name,
-                style: text.titleMedium?.copyWith(color: cs.onTertiaryContainer),
+                style: text.titleMedium?.copyWith(
+                  color: cs.onTertiaryContainer,
+                ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -545,13 +600,19 @@ class MenuTile extends StatelessWidget {
     return InkWell(
       onTap: onAdd,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Gap.md, vertical: Gap.sm),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Gap.md,
+          vertical: Gap.sm,
+        ),
         child: Row(
           children: [
             CircleAvatar(
               radius: 22,
               backgroundColor: cs.secondaryContainer,
-              child: Icon(iconFor(item.category), color: cs.onSecondaryContainer),
+              child: Icon(
+                iconFor(item.category),
+                color: cs.onSecondaryContainer,
+              ),
             ),
             const SizedBox(width: Gap.md),
             Expanded(
@@ -608,51 +669,51 @@ class MenuCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return Card(
-    child: Padding(
-      padding: const EdgeInsets.all(Gap.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: cs.secondaryContainer,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                iconFor(item.category),
-                size: 40,
-                color: cs.onSecondaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(Gap.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: cs.secondaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  iconFor(item.category),
+                  size: 40,
+                  color: cs.onSecondaryContainer,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: Gap.sm),
-          Text(
-            item.name,
-            style: text.titleSmall,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: Gap.xs),
-          Text(
-            rupiah(item.price),
-            style: text.bodyMedium,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: Gap.sm),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.tonal(
-              onPressed: onAdd,
-              child: Text(quantity > 0 ? 'Tambah ($quantity)' : 'Tambah'),
+            const SizedBox(height: Gap.sm),
+            Text(
+              item.name,
+              style: text.titleSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-        ],
+            const SizedBox(height: Gap.xs),
+            Text(
+              rupiah(item.price),
+              style: text.bodyMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: Gap.sm),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.tonal(
+                onPressed: onAdd,
+                child: Text(quantity > 0 ? 'Tambah ($quantity)' : 'Tambah'),
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
 }
 
@@ -817,7 +878,10 @@ class _LabHarnessState extends State<LabHarness> {
     return MaterialApp(
       title: 'Lab 04 · device harness',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, colorSchemeSeed: const Color(0xFF455A64)),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: const Color(0xFF455A64),
+      ),
       home: Builder(
         builder: (context) => Scaffold(
           body: SafeArea(
@@ -859,7 +923,7 @@ class _LabHarnessState extends State<LabHarness> {
         const SizedBox(height: 4),
         Text(
           'Try every combination. Keep the debug console open: '
-              '"A RenderFlex overflowed by … pixels" names the widget, the axis and the amount.',
+          '"A RenderFlex overflowed by … pixels" names the widget, the axis and the amount.',
           style: text.bodySmall,
         ),
         const SizedBox(height: 20),
@@ -985,7 +1049,9 @@ class _LabHarnessState extends State<LabHarness> {
                             right: 0,
                             bottom: 0,
                             height: safe.bottom,
-                            child: const IgnorePointer(child: _FakeGestureBar()),
+                            child: const IgnorePointer(
+                              child: _FakeGestureBar(),
+                            ),
                           ),
                         if (keyboard > 0)
                           Positioned(
@@ -1019,7 +1085,10 @@ class _FakeStatusBar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text('9:41', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+            child: Text(
+              '9:41',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
           ),
         ),
         Center(
@@ -1072,7 +1141,8 @@ class _FakeKeyboard extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    for (final letter in row.split('')) Expanded(child: _Key(letter)),
+                    for (final letter in row.split(''))
+                      Expanded(child: _Key(letter)),
                   ],
                 ),
               ),
