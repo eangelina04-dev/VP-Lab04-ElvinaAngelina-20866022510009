@@ -10,4 +10,5 @@
 | MenuScreen body | overflowed by 184 px (small) dan 74 px (large) on the bottom at landscape; tablet tidak error tapi daftar nyaris tidak terlihat | Column menumpuk ±376 dp bagian tak-gulir di atas daftar, tidak ada yang bisa mengalah saat tinggi layar kurang | satu CustomScrollView: header sampai promo jadi SliverToBoxAdapter, daftar jadi SliverList.builder / SliverGrid.builder (lazy) |
 
 Catatan:
-"Tes 2 lolos tanpa perubahan, karena fix Tes 1 memakai Expanded dan scroll, bukan angka tetap"
+"Tes 2 lolos tanpa perubahan, karena fix Tes 1 memakai Expanded dan scroll, bukan angka tetap."
+"Tes 5 lolos tanpa  perubahan karena fix sebelumnya, widget seperti PromoCard, MenuTile, san MenuCard sudah memakai maxLines + ellipsis."
