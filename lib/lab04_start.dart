@@ -258,7 +258,6 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     final visible = _visible;
     final promos = widget.items.where((item) => item.promo).toList();
-    final isTablet = MediaQuery.sizeOf(context).width > 600;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Menu')),
@@ -282,31 +281,36 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           PromoStrip(first: promos[0], second: promos[1]),
           Expanded(
-            child: isTablet
-                ? GridView.count(
-                    crossAxisCount: 4,
-                    childAspectRatio: 0.75,
-                    padding: const EdgeInsets.all(Gap.md),
-                    mainAxisSpacing: Gap.md,
-                    crossAxisSpacing: Gap.md,
-              children: [
-                for (final item in visible)
-                  MenuCard(
-                    item: item,
-                    quantity: _qty[item.id] ?? 0,
-                    onAdd: () => _add(item),
-                  ),
-              ],
-            )
-                : ListView(
-              children: [
-                for (final item in visible)
-                  MenuTile(
-                    item: item,
-                    quantity: _qty[item.id] ?? 0,
-                    onAdd: () => _add(item),
-                  ),
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isWide = constraints.maxWidth >= 600;
+                return isWide
+                    ? GridView.count(
+                        crossAxisCount: 4,
+                        childAspectRatio: 0.75,
+                        padding: const EdgeInsets.all(Gap.md),
+                        mainAxisSpacing: Gap.md,
+                        crossAxisSpacing: Gap.md,
+                        children: [
+                          for (final item in visible)
+                            MenuCard(
+                              item: item,
+                              quantity: _qty[item.id] ?? 0,
+                              onAdd: () => _add(item),
+                            ),
+                        ],
+                      )
+                    : ListView(
+                        children: [
+                          for (final item in visible)
+                            MenuTile(
+                              item: item,
+                              quantity: _qty[item.id] ?? 0,
+                              onAdd: () => _add(item),
+                            ),
+                        ],
+                      );
+              },
             ),
           ),
         ],
