@@ -284,10 +284,11 @@ class _MenuScreenState extends State<MenuScreen> {
           Expanded(
             child: isTablet
                 ? GridView.count(
-              crossAxisCount: 4,
-              padding: const EdgeInsets.all(Gap.md),
-              mainAxisSpacing: Gap.md,
-              crossAxisSpacing: Gap.md,
+                    crossAxisCount: 4,
+                    childAspectRatio: 0.75,
+                    padding: const EdgeInsets.all(Gap.md),
+                    mainAxisSpacing: Gap.md,
+                    crossAxisSpacing: Gap.md,
               children: [
                 for (final item in visible)
                   MenuCard(
@@ -563,13 +564,13 @@ class MenuCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(Gap.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 110,
+    child: Padding(
+      padding: const EdgeInsets.all(Gap.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
               decoration: BoxDecoration(
                 color: cs.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
@@ -581,22 +582,33 @@ class MenuCard extends StatelessWidget {
                 color: cs.onSecondaryContainer,
               ),
             ),
-            const SizedBox(height: Gap.sm),
-            Text(item.name, style: text.titleSmall),
-            const SizedBox(height: Gap.xs),
-            Text(rupiah(item.price), style: text.bodyMedium),
-            const SizedBox(height: Gap.sm),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.tonal(
-                onPressed: onAdd,
-                child: Text(quantity > 0 ? 'Tambah ($quantity)' : 'Tambah'),
-              ),
+          ),
+          const SizedBox(height: Gap.sm),
+          Text(
+            item.name,
+            style: text.titleSmall,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: Gap.xs),
+          Text(
+            rupiah(item.price),
+            style: text.bodyMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: Gap.sm),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.tonal(
+              onPressed: onAdd,
+              child: Text(quantity > 0 ? 'Tambah ($quantity)' : 'Tambah'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
+    ),
+  );
   }
 }
 

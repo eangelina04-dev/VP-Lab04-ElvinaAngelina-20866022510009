@@ -5,6 +5,7 @@
 | PromoStrip/PromoCard | overflowed by 128 px on the right at 320 dp (2 × 200 + 16 = 416 dp vs 288 dp) | Kartu menetapkan lebarnya sendiri, padahal parent yang membagi ruang | Hapus width: 200, tiap kartu dibungkus Expanded, teks diberi maxLines + ellipsis |
 | MenuTile | overflowed by 22 px on the right at 320 dp | Column nama menu mengukur lebar dari teks, tidak diberi batas oleh Row; Spacer tidak bisa mengecilkan apa pun | Expanded + maxLines: 2 + ellipsis, Spacer diganti SizedBox kecil |
 | CartBar | overflowed by 96 px on the right at 320 dp (208 dp tetap + teks 176 dp > 288 dp) | teks tanpa batas dan tombol width: 160 berebut ruang, tidak ada yang mengalah | Expanded pada teks + maxLines: 2 + ellipsis, width: 160 dihapus |
+| MenuCard (grid tablet) | overflowed by 62 px on the bottom at 800 dp (isi 202 dp di sel 140 dp) | Sel grid memberi tinggi tepat, tapi kartu memaksa kotak ikon height: 110 | Kotak ikon Expanded, teks maxLines + ellipsis, sel dibuat lebih tinggi (childAspectRatio: 0.75) |
 
 Catatan:
 "Tes 2 lolos tanpa perubahan, karena fix Tes 1 memakai Expanded dan scroll, bukan angka tetap"
