@@ -12,5 +12,6 @@
 | MenuScreen / EmptyState | Data kosong menampilkan layar blank tanpa penjelasan | Layar mengasumsikan data selalu ada, tidak ada keadaan untuk daftar kosong | EmptyState (ikon, pesan, tombol, Key('empty-state')) lewat SliverFillRemaining, plus SearchController agar reset sinkron |
 
 Catatan:
-"Tes 2 lolos tanpa perubahan, karena fix Tes 1 memakai Expanded dan scroll, bukan angka tetap."
-"Tes 5 lolos tanpa  perubahan karena fix sebelumnya, widget seperti PromoCard, MenuTile, san MenuCard sudah memakai maxLines + ellipsis."
+1. Tes 2 lolos tanpa perubahan, karena fix Tes 1 memakai Expanded dan scroll, bukan angka tetap.
+2. Tes 5 lolos tanpa  perubahan karena fix sebelumnya, widget seperti PromoCard, MenuTile, san MenuCard sudah memakai maxLines + ellipsis.
+3. Tes 7 lolos tanpa perubahan karena daftar sudah memakai SliverList.builder / SliverGrid.builder (lazy) sejak Tes 4.
