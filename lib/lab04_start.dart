@@ -625,18 +625,19 @@ class CartBar extends StatelessWidget {
         children: [
           Icon(Icons.shopping_bag_outlined, color: cs.onSurfaceVariant),
           const SizedBox(width: Gap.sm),
-          Text(
-            'Pesanan: $count item · Total ${rupiah(total)}',
-            style: text.titleSmall,
+          Expanded(
+            child: Text(
+              'Pesanan: $count item · Total ${rupiah(total)}',
+              style: text.titleSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const SizedBox(width: Gap.md),
-          SizedBox(
-            width: 160,
-            child: FilledButton(
-              key: const Key('order-button'),
-              onPressed: count == 0 ? null : onOrder,
-              child: const Text('Pesan'),
-            ),
+          FilledButton(
+            key: const Key('order-button'),
+            onPressed: count == 0 ? null : onOrder,
+            child: const Text('Pesan'),
           ),
         ],
       ),
