@@ -417,9 +417,9 @@ class PromoStrip extends StatelessWidget {
       padding: const EdgeInsets.all(Gap.md),
       child: Row(
         children: [
-          PromoCard(item: first),
+          Expanded(child: PromoCard(item: first)),
           const SizedBox(width: Gap.md),
-          PromoCard(item: second),
+          Expanded(child: PromoCard(item: second)),
         ],
       ),
     );
@@ -437,7 +437,6 @@ class PromoCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return SizedBox(
-      width: 200,
       height: 150,
       child: Card(
         margin: EdgeInsets.zero,
@@ -453,11 +452,15 @@ class PromoCard extends StatelessWidget {
                   color: cs.onTertiaryContainer,
                   letterSpacing: 1.2,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: Gap.xs),
               Text(
                 item.name,
                 style: text.titleMedium?.copyWith(color: cs.onTertiaryContainer),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               const Spacer(),
               Text(
@@ -466,6 +469,8 @@ class PromoCard extends StatelessWidget {
                   color: cs.onTertiaryContainer,
                   fontWeight: FontWeight.bold,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
